@@ -15,11 +15,11 @@ class AppNavigator {
 
   static Future pushNamed(
     String route, {
-    required SubRouter router,
+    SubRouter? router,
     arguments,
   }) {
     return key.currentState!.pushNamed(
-      '${router.moduleName} $route',
+      router != null ? '${router.moduleName} $route' : route,
       arguments: arguments,
     );
   }
@@ -32,11 +32,11 @@ class AppNavigator {
 
   static Future pushNamedReplacement(
     String route, {
-    required SubRouter router,
+    SubRouter? router,
     arguments,
   }) {
     return key.currentState!.pushReplacementNamed(
-      '${router.moduleName} $route',
+      router != null ? '${router.moduleName} $route' : route,
       arguments: arguments,
     );
   }
@@ -50,11 +50,11 @@ class AppNavigator {
 
   static Future pushNamedAndClear(
     String route, {
-    required SubRouter router,
+    SubRouter? router,
     arguments,
   }) {
     return key.currentState!.pushNamedAndRemoveUntil(
-      '${router.moduleName} $route',
+      router != null ? '${router.moduleName} $route' : route,
       (route) => false,
       arguments: arguments,
     );
