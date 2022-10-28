@@ -23,7 +23,7 @@ class _ModuleARouter implements SubRouter {
       case aTwoRoute:
         return const ViewATwo();
       case aThreeRoute:
-        return const ViewAThree();
+        return ViewAThree();
       default:
         return const Scaffold(
           body: Center(
