@@ -21,9 +21,7 @@ class AppRouter {
   ];
 
   Route onGenerateRoute(RouteSettings settings) {
-    print(settings.name);
-    final routeComponents = settings.name!.split(' ');
-    print(routeComponents.length);
+    final routeComponents = settings.name!.split('/');
     //Backward compatibility check
     if (routeComponents.length == 1) {
       return MainAppRouter.generateRoutes(settings);
@@ -37,15 +35,17 @@ class AppRouter {
     );
     final routeName = routeComponents[1];
     final splitRouteSettings = RouteSettings(
-      name: routeName,
+      name: "/$routeName",
       arguments: settings.arguments,
     );
     return Platform.isIOS
         ? CupertinoPageRoute(
             builder: (_) => module.router(splitRouteSettings),
+            settings: splitRouteSettings,
           )
         : MaterialPageRoute(
             builder: (_) => module.router(splitRouteSettings),
+            settings: splitRouteSettings,
           );
   }
 }
