@@ -1,6 +1,14 @@
 # navhero
 
-A new Flutter project.
+A simple experiment to give nav1.0 super powers.
+
+Named routing in Nav 1.0 could get messy, with large router files here and there.
+
+This project aims at experimenting with the navigator.
+
+Router is a list of sub router with each subrouter having its own route.
+
+Features grouped folder by folder can have their own router and registered in the main router.
 
 ## Getting Started
 
@@ -14,3 +22,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## TODO
+- Add regular navigation sample
+- Add subrouter sample
+- Deep linking sample
+- App shortcuts sample
