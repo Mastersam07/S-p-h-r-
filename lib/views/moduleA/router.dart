@@ -17,7 +17,6 @@ class _ModuleARouter implements SubRouter {
 
   @override
   Widget router(RouteSettings settings) {
-    print("settings.arguments settings.arguments: ${settings.arguments}");
     switch (settings.name) {
       case aOneRoute:
         return ViewAOne();

@@ -38,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    print("name: ${ModalRoute.of(context)?.settings.name}");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -49,23 +48,92 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             OutlinedButton(
               onPressed: () => AppNavigator.pushNamed(aOneRoute,
-                  router: moduleARouter, arguments: 5),
+                  router: moduleARouter, arguments: 1),
               child: const Text('Push ModuleA'),
+            ),
+            OutlinedButton(
+              onPressed: () => AppNavigator.pushNamed(bOneRoute,
+                  router: moduleBRouter, arguments: 2),
+              child: const Text('Push ModuleB'),
             ),
             OutlinedButton(
               onPressed: () =>
-                  AppNavigator.pushNamed(bOneRoute, router: moduleBRouter),
-              child: const Text('Push ModuleA'),
-            ),
-            OutlinedButton(
-              onPressed: () => AppNavigator.pushNamed(normalARoute),
+                  AppNavigator.pushNamed(normalARoute, arguments: 3),
               child: const Text('NormalA'),
             ),
             OutlinedButton(
-              onPressed: () => AppNavigator.pushNamed(normalBRoute),
+              onPressed: () =>
+                  AppNavigator.pushNamed(normalBRoute, arguments: 4),
               child: const Text('NormalB'),
             ),
+            OutlinedButton(
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => InfoPage())),
+              child: const Text('Info'),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class InfoPage extends StatelessWidget {
+  InfoPage({Key? key}) : super(key: key);
+
+  final NavigationHistoryObserver historyObserver = NavigationHistoryObserver();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Information'),
+      ),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              Text(
+                'History',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              ListView.separated(
+                separatorBuilder: (context, index) =>
+                    const Divider(thickness: 2),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => Text(
+                  historyObserver.history[index].settings.name ?? 'Null',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      ?.copyWith(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                itemCount: historyObserver.history.length,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Popped Routes',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              ListView.separated(
+                separatorBuilder: (context, index) =>
+                    const Divider(thickness: 2),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => Text(
+                  historyObserver.poppedRoutes[index].settings.name ?? 'Null',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      ?.copyWith(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                itemCount: historyObserver.poppedRoutes.length,
+              )
+            ],
+          ),
         ),
       ),
     );

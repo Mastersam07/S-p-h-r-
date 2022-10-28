@@ -19,7 +19,7 @@ class AppNavigator {
     arguments,
   }) {
     return key.currentState!.pushNamed(
-      router != null ? '${router.moduleName}$route' : route,
+      router != null ? '${router.moduleName} $route' : route,
       arguments: arguments,
     );
   }
@@ -36,7 +36,7 @@ class AppNavigator {
     arguments,
   }) {
     return key.currentState!.pushReplacementNamed(
-      router != null ? '${router.moduleName}$route' : route,
+      router != null ? '${router.moduleName} $route' : route,
       arguments: arguments,
     );
   }
@@ -54,7 +54,7 @@ class AppNavigator {
     arguments,
   }) {
     return key.currentState!.pushNamedAndRemoveUntil(
-      router != null ? '${router.moduleName}$route' : route,
+      router != null ? '${router.moduleName} $route' : route,
       (route) => false,
       arguments: arguments,
     );

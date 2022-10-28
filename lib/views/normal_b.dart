@@ -5,7 +5,6 @@ class NormalB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(ModalRoute.of(context)?.settings);
     return const Scaffold(
       body: Center(
         child: Text('NormalB'),

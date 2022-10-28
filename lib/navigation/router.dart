@@ -21,7 +21,7 @@ class AppRouter {
   ];
 
   Route onGenerateRoute(RouteSettings settings) {
-    final routeComponents = settings.name!.split('/');
+    final routeComponents = settings.name!.split(' ');
     //Backward compatibility check
     if (routeComponents.length == 1) {
       return MainAppRouter.generateRoutes(settings);
@@ -35,7 +35,7 @@ class AppRouter {
     );
     final routeName = routeComponents[1];
     final splitRouteSettings = RouteSettings(
-      name: "/$routeName",
+      name: routeName,
       arguments: settings.arguments,
     );
     return Platform.isIOS

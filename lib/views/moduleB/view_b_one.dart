@@ -9,7 +9,6 @@ class ViewBOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(historyObserver.history);
     return const Scaffold(
       body: Center(
         child: Text('View B One'),
