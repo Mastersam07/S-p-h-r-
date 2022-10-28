@@ -6,7 +6,8 @@ class NavigationHistoryObserver extends NavigatorObserver {
   /// A list of all the past routes
   final List<Route<dynamic>?> _history = <Route<dynamic>?>[];
 
-  /// Gets a clone of the navigation history as an immutable list.
+  /// Gets a clone of the navigation history as a list.
+  /// TODO: MAKE THIS IMMUTABLE
   List<Route<dynamic>> get history => List<Route<dynamic>>.from(_history);
 
   /// Gets the top route in the navigation stack.
@@ -15,7 +16,8 @@ class NavigationHistoryObserver extends NavigatorObserver {
   /// A list of all routes that were popped to reach the current.
   final List<Route<dynamic>?> _poppedRoutes = <Route<dynamic>?>[];
 
-  /// Gets a clone of the popped routes as an immutable list.
+  /// Gets a clone of the popped routes as a list.
+  /// TODO: MAKE THIS IMMUTABLE
   List<Route<dynamic>> get poppedRoutes =>
       List<Route<dynamic>>.from(_poppedRoutes);
 
