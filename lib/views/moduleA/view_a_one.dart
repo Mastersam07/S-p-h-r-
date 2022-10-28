@@ -9,14 +9,7 @@ class ViewAOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: ARGS IS NULL
-    print("args: ${ModalRoute.of(context)?.settings.arguments}");
-
-    // TODO: NAME IS NULL
-    print("name: ${ModalRoute.of(context)?.settings.name}");
-
-    // TODO: HISTORY SHOWS A ROUTE WITH NULL SETTINGS
-    print(historyObserver.history);
+    print(ModalRoute.of(context)?.settings);
     return const Scaffold(
       body: Center(
         child: Text('View A One'),

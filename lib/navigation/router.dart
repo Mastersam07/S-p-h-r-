@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:navhero/main.dart';
+import 'package:navhero/navigation/route.dart';
 
 import '../views/moduleA/router.dart';
 import '../views/moduleB/router.dart';
+import '../views/normal_a.dart';
+import '../views/normal_b.dart';
 
 class AppRouter {
   AppRouter._();
@@ -20,6 +23,7 @@ class AppRouter {
   Route onGenerateRoute(RouteSettings settings) {
     print(settings.name);
     final routeComponents = settings.name!.split(' ');
+    print(routeComponents.length);
     //Backward compatibility check
     if (routeComponents.length == 1) {
       return MainAppRouter.generateRoutes(settings);
@@ -32,9 +36,6 @@ class AppRouter {
       ),
     );
     final routeName = routeComponents[1];
-    print('routeComponents[1]: ${routeComponents[1]}');
-    print('routeComponents[0]: ${routeComponents[0]}');
-    print('settings.arguments: ${settings.arguments}');
     final splitRouteSettings = RouteSettings(
       name: routeName,
       arguments: settings.arguments,
@@ -57,10 +58,20 @@ abstract class SubRouter {
 abstract class MainAppRouter {
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case '/':
+      case dashboardRoute:
         return getPageRoute(
           settings: settings,
           view: const MyHomePage(),
+        );
+      case normalARoute:
+        return getPageRoute(
+          settings: settings,
+          view: const NormalA(),
+        );
+      case normalBRoute:
+        return getPageRoute(
+          settings: settings,
+          view: const NormalB(),
         );
       default:
         return getPageRoute(

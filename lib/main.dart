@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:navhero/navigation/route.dart';
 import 'views/moduleA/router.dart';
 
 import 'navigation/navigator.dart';
@@ -55,6 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () =>
                   AppNavigator.pushNamed(bOneRoute, router: moduleBRouter),
               child: const Text('Push ModuleA'),
+            ),
+            OutlinedButton(
+              onPressed: () => AppNavigator.pushNamed(normalARoute),
+              child: const Text('NormalA'),
+            ),
+            OutlinedButton(
+              onPressed: () => AppNavigator.pushNamed(normalBRoute),
+              child: const Text('NormalB'),
             ),
           ],
         ),
