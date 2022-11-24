@@ -13,13 +13,13 @@ class AppNavigator {
 
   static BuildContext get currentContext => key.currentContext!;
 
-  static Future push(Widget page, [String? routeName]) {
+  static Future<T?> push<T>(Widget page, [String? routeName]) {
     return key.currentState!.push(
       getPageRoute(view: page, routeName: routeName),
     );
   }
 
-  static Future pushNamed(
+  static Future<T?> pushNamed<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -30,13 +30,13 @@ class AppNavigator {
     );
   }
 
-  static Future pushReplacement(Widget page, [String? routeName]) {
+  static Future<T?> pushReplacement<T>(Widget page, [String? routeName]) {
     return key.currentState!.pushReplacement(
       getPageRoute(view: page, routeName: routeName),
     );
   }
 
-  static Future pushNamedReplacement(
+  static Future<T?> pushNamedReplacement<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -47,14 +47,14 @@ class AppNavigator {
     );
   }
 
-  static Future pushAndClear(Widget page, [String? routeName]) {
+  static Future<T?> pushAndClear<T>(Widget page, [String? routeName]) {
     return key.currentState!.pushAndRemoveUntil(
       getPageRoute(view: page, routeName: routeName),
       (route) => false,
     );
   }
 
-  static Future pushNamedAndClear(
+  static Future<T?> pushNamedAndClear<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -66,18 +66,18 @@ class AppNavigator {
     );
   }
 
-  static dynamic pop([result]) {
+  static void pop<T>([T? result]) {
     return key.currentState!.pop(result);
   }
 
-  static dynamic maybePop([result]) {
+  static void maybePop<T>([T? result]) {
     return key.currentState!.pop(result);
   }
 
   static bool get canPop => key.currentState!.canPop();
 
   static void popUntilRoute(String routeName) {
-    key.currentState!.popUntil(ModalRoute.withName(routeName));
+    return key.currentState!.popUntil(ModalRoute.withName(routeName));
   }
 
   static PageRoute<T> getPageRoute<T>({
