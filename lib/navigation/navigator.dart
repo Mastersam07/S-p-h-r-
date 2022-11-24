@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'router.dart';
 
 export 'router.dart';
@@ -7,9 +11,9 @@ class AppNavigator {
   AppNavigator._();
   static final key = GlobalKey<NavigatorState>();
 
-  static Future push(Widget page) {
+  static Future push(Widget page, [String? routeName]) {
     return key.currentState!.push(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
     );
   }
 
@@ -24,9 +28,9 @@ class AppNavigator {
     );
   }
 
-  static Future pushReplacement(Widget page) {
+  static Future pushReplacement(Widget page, [String? routeName]) {
     return key.currentState!.pushReplacement(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
     );
   }
 
@@ -41,9 +45,9 @@ class AppNavigator {
     );
   }
 
-  static Future pushAndClear(Widget page) {
+  static Future pushAndClear(Widget page, [String? routeName]) {
     return key.currentState!.pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
       (route) => false,
     );
   }
@@ -69,4 +73,22 @@ class AppNavigator {
   }
 
   static bool get canPop => key.currentState!.canPop();
+
+  static PageRoute<T> getPageRoute<T>({
+    required Widget view,
+    required String? routeName,
+  }) {
+    final nameOfRoute = routeName ?? view.runtimeType.toString();
+    if (Platform.isIOS) {
+      return CupertinoPageRoute<T>(
+        builder: (_) => view,
+        settings: RouteSettings(name: nameOfRoute),
+      );
+    } else {
+      return MaterialPageRoute<T>(
+        builder: (_) => view,
+        settings: RouteSettings(name: nameOfRoute),
+      );
+    }
+  }
 }
