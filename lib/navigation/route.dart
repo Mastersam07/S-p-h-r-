@@ -6,3 +6,5 @@
 const String dashboardRoute = '/';
 const String normalARoute = '/normalA';
 const String normalBRoute = '/normalB';
+const String normalCRoute = '/normalC';
+const String normalDRoute = '/normalD';

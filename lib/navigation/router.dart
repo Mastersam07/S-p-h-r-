@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:navhero/main.dart';
-import 'package:navhero/navigation/route.dart';
 
+import '../main.dart';
 import '../views/moduleA/router.dart';
 import '../views/moduleB/router.dart';
 import '../views/normal_a.dart';
 import '../views/normal_b.dart';
+import '../views/normal_c.dart';
+import '../views/normal_d.dart';
+import 'route.dart';
 
 class AppRouter {
   AppRouter._();
@@ -22,9 +24,12 @@ class AppRouter {
 
   Route onGenerateRoute(RouteSettings settings) {
     final routeComponents = settings.name!.split(' ');
-    //Backward compatibility check
+
     if (routeComponents.length == 1) {
-      return MainAppRouter.generateRoutes(settings);
+      return getPageRoute(
+        view: _mainRouter(settings),
+        settings: settings,
+      );
     }
 
     final module = _moduleRouterRegistration.firstWhere(
@@ -38,59 +43,56 @@ class AppRouter {
       name: routeName,
       arguments: settings.arguments,
     );
+    return getPageRoute(
+      view: module.router(splitRouteSettings),
+      settings: splitRouteSettings,
+    );
+  }
+
+  PageRoute getPageRoute({
+    required Widget view,
+    required RouteSettings settings,
+  }) {
     return Platform.isIOS
         ? CupertinoPageRoute(
-            builder: (_) => module.router(splitRouteSettings),
-            settings: splitRouteSettings,
+            builder: (_) => view,
+            settings: settings,
           )
         : MaterialPageRoute(
-            builder: (_) => module.router(splitRouteSettings),
-            settings: splitRouteSettings,
+            builder: (_) => view,
+            settings: settings,
           );
   }
-}
 
-abstract class SubRouter {
-  String get moduleName;
-  Widget router(RouteSettings settings);
-}
-
-abstract class MainAppRouter {
-  static Route<dynamic> generateRoutes(RouteSettings settings) {
+  Widget _mainRouter(RouteSettings settings) {
     switch (settings.name) {
-      case dashboardRoute:
-        return getPageRoute(
-          settings: settings,
-          view: const MyHomePage(),
+      case normalCRoute:
+        return NormalC(
+          valueFromArgument: settings.arguments as String,
         );
-      case normalARoute:
-        return getPageRoute(
-          settings: settings,
-          view: const NormalA(),
+
+      case normalDRoute:
+        return NormalD(
+          valueFromArgument: settings.arguments as String,
         );
-      case normalBRoute:
-        return getPageRoute(
-          settings: settings,
-          view: const NormalB(),
-        );
+
       default:
-        return getPageRoute(
-          settings: settings,
-          view: Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
+        return Scaffold(
+          body: Center(
+            child: Text('No route defined for ${settings.name}'),
           ),
         );
     }
   }
 
-  static PageRoute<dynamic> getPageRoute({
-    required RouteSettings settings,
-    required Widget view,
-  }) {
-    return Platform.isIOS
-        ? CupertinoPageRoute(settings: settings, builder: (_) => view)
-        : MaterialPageRoute(settings: settings, builder: (_) => view);
-  }
+  Map<String, WidgetBuilder> get routes => {
+        dashboardRoute: (_) => const MyHomePage(),
+        normalARoute: (_) => const NormalA(),
+        normalBRoute: (_) => const NormalB(),
+      };
+}
+
+abstract class SubRouter {
+  String get moduleName;
+  Widget router(RouteSettings settings);
 }
