@@ -11,6 +11,8 @@ class AppNavigator {
   AppNavigator._();
   static final key = GlobalKey<NavigatorState>();
 
+  static BuildContext get currentContext => key.currentContext!;
+
   static Future push(Widget page, [String? routeName]) {
     return key.currentState!.push(
       getPageRoute(view: page, routeName: routeName),
@@ -73,6 +75,10 @@ class AppNavigator {
   }
 
   static bool get canPop => key.currentState!.canPop();
+
+  static void popUntilRoute(String routeName) {
+    key.currentState!.popUntil(ModalRoute.withName(routeName));
+  }
 
   static PageRoute<T> getPageRoute<T>({
     required Widget view,
