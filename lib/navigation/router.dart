@@ -8,6 +8,8 @@ import '../views/moduleA/router.dart';
 import '../views/moduleB/router.dart';
 import '../views/normal_a.dart';
 import '../views/normal_b.dart';
+import '../views/normal_c.dart';
+import '../views/normal_d.dart';
 import 'route.dart';
 
 class AppRouter {
@@ -64,14 +66,15 @@ class AppRouter {
 
   Widget _mainRouter(RouteSettings settings) {
     switch (settings.name) {
-      case dashboardRoute:
-        return const MyHomePage();
+      case normalCRoute:
+        return NormalC(
+          valueFromArgument: settings.arguments as String,
+        );
 
-      case normalARoute:
-        return const NormalA();
-
-      case normalBRoute:
-        return const NormalB();
+      case normalDRoute:
+        return NormalD(
+          valueFromArgument: settings.arguments as String,
+        );
 
       default:
         return Scaffold(
@@ -81,6 +84,12 @@ class AppRouter {
         );
     }
   }
+
+  Map<String, WidgetBuilder> get routes => {
+        dashboardRoute: (_) => const MyHomePage(),
+        normalARoute: (_) => const NormalA(),
+        normalBRoute: (_) => const NormalB(),
+      };
 }
 
 abstract class SubRouter {

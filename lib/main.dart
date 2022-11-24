@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       onGenerateRoute: AppRouter().onGenerateRoute,
+      routes: AppRouter().routes,
       navigatorObservers: [NavigationHistoryObserver()],
     );
   }
