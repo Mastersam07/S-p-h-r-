@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'router.dart';
 
 export 'router.dart';
@@ -7,13 +11,15 @@ class AppNavigator {
   AppNavigator._();
   static final key = GlobalKey<NavigatorState>();
 
-  static Future push(Widget page) {
+  static BuildContext get currentContext => key.currentContext!;
+
+  static Future<T?> push<T>(Widget page, [String? routeName]) {
     return key.currentState!.push(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
     );
   }
 
-  static Future pushNamed(
+  static Future<T?> pushNamed<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -24,13 +30,13 @@ class AppNavigator {
     );
   }
 
-  static Future pushReplacement(Widget page) {
+  static Future<T?> pushReplacement<T>(Widget page, [String? routeName]) {
     return key.currentState!.pushReplacement(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
     );
   }
 
-  static Future pushNamedReplacement(
+  static Future<T?> pushNamedReplacement<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -41,14 +47,14 @@ class AppNavigator {
     );
   }
 
-  static Future pushAndClear(Widget page) {
+  static Future<T?> pushAndClear<T>(Widget page, [String? routeName]) {
     return key.currentState!.pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => page),
+      getPageRoute(view: page, routeName: routeName),
       (route) => false,
     );
   }
 
-  static Future pushNamedAndClear(
+  static Future<T?> pushNamedAndClear<T>(
     String route, {
     SubRouter? router,
     arguments,
@@ -60,13 +66,35 @@ class AppNavigator {
     );
   }
 
-  static dynamic pop([result]) {
+  static void pop<T>([T? result]) {
     return key.currentState!.pop(result);
   }
 
-  static dynamic maybePop([result]) {
+  static void maybePop<T>([T? result]) {
     return key.currentState!.pop(result);
   }
 
   static bool get canPop => key.currentState!.canPop();
+
+  static void popUntilRoute(String routeName) {
+    return key.currentState!.popUntil(ModalRoute.withName(routeName));
+  }
+
+  static PageRoute<T> getPageRoute<T>({
+    required Widget view,
+    required String? routeName,
+  }) {
+    final nameOfRoute = routeName ?? view.runtimeType.toString();
+    if (Platform.isIOS) {
+      return CupertinoPageRoute<T>(
+        builder: (_) => view,
+        settings: RouteSettings(name: nameOfRoute),
+      );
+    } else {
+      return MaterialPageRoute<T>(
+        builder: (_) => view,
+        settings: RouteSettings(name: nameOfRoute),
+      );
+    }
+  }
 }
