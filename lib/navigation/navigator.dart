@@ -1,100 +1,55 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'router.dart';
+import 'supercharged_navigator.dart';
 
 export 'router.dart';
 
 class AppNavigator {
   AppNavigator._();
-  static final key = GlobalKey<NavigatorState>();
 
-  static BuildContext get currentContext => key.currentContext!;
+  static final _hood = SuperchargeNavigator();
 
-  static Future push(Widget page, [String? routeName]) {
-    return key.currentState!.push(
-      getPageRoute(view: page, routeName: routeName),
-    );
-  }
+  static final key = _hood.key;
+
+  static BuildContext get currentContext => _hood.currentContext;
+
+  static Future<T?> push<T>(Widget page, [String? routeName]) =>
+      _hood.push(page, routeName);
 
   static Future<T?> pushNamed<T>(
     String route, {
     SubRouter? router,
     arguments,
-  }) {
-    return key.currentState!.pushNamed(
-      router != null ? '${router.moduleName} $route' : route,
-      arguments: arguments,
-    );
-  }
+  }) =>
+      _hood.pushNamed(route, router: router, arguments: arguments);
 
-  static Future pushReplacement(Widget page, [String? routeName]) {
-    return key.currentState!.pushReplacement(
-      getPageRoute(view: page, routeName: routeName),
-    );
-  }
+  static Future<T?> pushReplacement<T>(Widget page, [String? routeName]) =>
+      _hood.pushReplacement<T>(page, routeName);
 
   static Future<T?> pushNamedReplacement<T>(
     String route, {
     SubRouter? router,
     arguments,
-  }) {
-    return key.currentState!.pushReplacementNamed(
-      router != null ? '${router.moduleName} $route' : route,
-      arguments: arguments,
-    );
-  }
+  }) =>
+      _hood.pushNamedReplacement<T>(route);
 
-  static Future<T?> pushAndClear<T>(Widget page, [String? routeName]) {
-    return key.currentState!.pushAndRemoveUntil(
-      getPageRoute(view: page, routeName: routeName),
-      (route) => false,
-    );
-  }
+  static Future<T?> pushAndClear<T>(Widget page, [String? routeName]) =>
+      _hood.pushAndClear(page, routeName);
 
   static Future<T?> pushNamedAndClear<T>(
     String route, {
     SubRouter? router,
     arguments,
-  }) {
-    return key.currentState!.pushNamedAndRemoveUntil(
-      router != null ? '${router.moduleName} $route' : route,
-      (route) => false,
-      arguments: arguments,
-    );
-  }
+  }) =>
+      _hood.pushNamedAndClear(route, router: router, arguments: arguments);
 
-  static void pop<T>([T? result]) {
-    return key.currentState!.pop(result);
-  }
+  static void pop<T>([T? result]) => _hood.pop(result);
 
-  static void maybePop<T>([T? result]) {
-    return key.currentState!.pop(result);
-  }
+  static void maybePop<T>([T? result]) => _hood.maybePop(result);
 
-  static bool get canPop => key.currentState!.canPop();
+  static bool get canPop => _hood.canPop;
 
-  static void popUntilRoute(String routeName) {
-    return key.currentState!.popUntil(ModalRoute.withName(routeName));
-  }
-
-  static PageRoute<T> getPageRoute<T>({
-    required Widget view,
-    required String? routeName,
-  }) {
-    final nameOfRoute = routeName ?? view.runtimeType.toString();
-    if (Platform.isIOS) {
-      return CupertinoPageRoute<T>(
-        builder: (_) => view,
-        settings: RouteSettings(name: nameOfRoute),
-      );
-    } else {
-      return MaterialPageRoute<T>(
-        builder: (_) => view,
-        settings: RouteSettings(name: nameOfRoute),
-      );
-    }
-  }
+  static void popUntilRoute(String routeName) => _hood.popUntilRoute(routeName);
 }
