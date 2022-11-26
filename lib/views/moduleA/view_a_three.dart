@@ -10,13 +10,13 @@ class ViewAThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(historyObserver.history);
+    debugPrint(historyObserver.history.toString());
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('View A Three'),
+            const Text('View A Three'),
             OutlinedButton(
               onPressed: () => AppNavigator.pop(),
               child: const Text('Pop totally'),

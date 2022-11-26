@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,8 @@ class NavigationHistoryObserver extends NavigatorObserver {
 
   /// Gets a clone of the navigation history as a list.
   /// TODO: MAKE THIS IMMUTABLE
-  List<Route<dynamic>> get history => List<Route<dynamic>>.from(_history);
+  UnmodifiableListView<Route<dynamic>?> get history =>
+      UnmodifiableListView(_history);
 
   /// Gets the top route in the navigation stack.
   Route<dynamic>? get top => _history.last;

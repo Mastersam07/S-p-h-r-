@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:navhero/navigation/route.dart';
-import 'views/moduleA/router.dart';
+import 'package:navhero/views/module_wrapped/module_wrapped.dart';
 
 import 'navigation/navigator.dart';
+import 'navigation/route.dart';
 import 'util/observer.dart';
+import 'views/moduleA/router.dart';
 import 'views/moduleB/router.dart';
 
 void main() {
@@ -68,6 +69,22 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('NormalB'),
             ),
             OutlinedButton(
+              onPressed: () =>
+                  AppNavigator.pushNamed(normalCRoute, arguments: 'Argument C'),
+              child: const Text('NormalC'),
+            ),
+            OutlinedButton(
+              onPressed: () =>
+                  AppNavigator.pushNamed(normalDRoute, arguments: 'Argument D'),
+              child: const Text('NormalD'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                ModuleWrapped.instance.start(context);
+              },
+              child: const Text('Wrapped Module Start'),
+            ),
+            OutlinedButton(
               onPressed: () => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => InfoPage())),
               child: const Text('Info'),
@@ -104,7 +121,7 @@ class InfoPage extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => Text(
-                  historyObserver.history[index].settings.name ?? 'Null',
+                  historyObserver.history[index]?.settings.name ?? 'Null',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText2

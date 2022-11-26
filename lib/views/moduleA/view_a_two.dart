@@ -13,7 +13,7 @@ class ViewATwo extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('View A Two'),
+            const Text('View A Two'),
             OutlinedButton(
               onPressed: () => AppNavigator.pushNamed(aThreeRoute,
                   router: moduleARouter, arguments: 3),

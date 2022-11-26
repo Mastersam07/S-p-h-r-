@@ -16,7 +16,7 @@ class ViewAOne extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('View A One'),
+            const Text('View A One'),
             OutlinedButton(
               onPressed: () => AppNavigator.pushNamed(aTwoRoute,
                   router: moduleARouter, arguments: 2),

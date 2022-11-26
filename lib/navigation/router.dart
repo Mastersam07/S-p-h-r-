@@ -49,7 +49,7 @@ class AppRouter {
     );
   }
 
-  PageRoute getPageRoute({
+  static PageRoute getPageRoute({
     required Widget view,
     required RouteSettings settings,
   }) {
