@@ -15,12 +15,12 @@ abstract class FeatureWrapper extends StatelessWidget {
 
   FeatureRouter get viewGenerator;
 
-  final navigator = SuperchargeNavigator();
+  final navigator = SuperchargedNavigator();
 
   Future<void> start([BuildContext? context]) async {
     if (context != null) {
       Navigator.of(context).push(
-        SuperchargeNavigator.getPageRoute(view: this, routeName: _featureName),
+        SuperchargedNavigator.getPageRoute(view: this, routeName: _featureName),
       );
     } else {
       AppNavigator.push(this, _featureName);

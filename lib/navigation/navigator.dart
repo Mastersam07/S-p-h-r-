@@ -9,7 +9,7 @@ export 'router.dart';
 class AppNavigator {
   AppNavigator._();
 
-  static final _hood = SuperchargeNavigator();
+  static final _hood = SuperchargedNavigator();
 
   static final key = _hood.key;
 

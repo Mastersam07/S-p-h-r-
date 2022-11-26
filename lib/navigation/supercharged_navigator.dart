@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'router.dart';
 
-class SuperchargeNavigator {
-  SuperchargeNavigator();
+class SuperchargedNavigator {
+  SuperchargedNavigator();
 
   final key = GlobalKey<NavigatorState>();
 
